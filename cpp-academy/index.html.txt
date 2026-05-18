@@ -1,20 +1,69 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>编程鸭 🦆</title>
-<style>
-body {
-    font-family: sans-serif;
-    background: #f2f4f7;
-    text-align: center;
-    padding: 60px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编程鸭 🦆 - C++ 信奥赛教学</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .duck {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-<h1>🦆 编程鸭</h1>
-<p>欢迎来到鸭鸭的 C++ 世界！</p>
-<a href="stats.html">学习统计</a>
+    <div class="container">
+        <h1>欢迎来到 编程鸭 🦆</h1>
+        <div class="duck">🦆</div>
+        面向中小学生的 C++ 信奥赛教学网站
+        
+        <a href="daily.html" class="btn">🎲 每日一题</a>
+        <a href="course/basic-syntax.html" class="btn">📚 课程学习</a>
+        <a href="stats.html" class="btn">📊 学习统计</a>
+        <a href="badges.html" class="btn">🏅 学习勋章</a>
+        
+        <div class="footer">
+            让编程像鸭子一样快乐 🎉
+        </div>
+    </div>
 </body>
 </html>
