@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日一题 · 编程鸭</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🎲 每日一题</h1>
+    <a href="index.html">← 返回首页</a>
+</header>
+
+<main class="container">
+
+<section class="lesson">
+
+    <!-- 难度 -->
+    <div id="difficulty"></div>
+
+    <h2 id="title"></h2>
+    <p id="desc"></p>
+
+    <hr>
+
+    <h3>📥 输入格式</h3>
+    <p id="inputDesc"></p>
+
+    <h3>📤 输出格式</h3>
+    <p id="outputDesc"></p>
+
+    <h3>📌 测试用例</h3>
+    <ul id="cases"></ul>
+
+    <!-- 编辑器 -->
+    <h3>🧠 写你的代码</h3>
+    <textarea id="code" rows="12" style="width:100%;font-family:monospace;"></textarea>
+
+    <br><br>
+    <button class="btn" onclick="runCode()">🚀 提交判题</button>
+
+    <!-- 判题结果 -->
+    <div id="result" style="margin-top:20px;font-weight:bold;"></div>
+
+    <!-- 教师导出 -->
+    <hr>
+    <button class="btn" onclick="exportCSV()">📤 导出通过率 CSV</button>
+
+</section>
+
+</main>
+
+<script>
+/* ✅ 题目池 */
+const problems = [
+{
+    title: "A + B 问题",
+    desc: "输入两个整数，输出它们的和。",
+    difficulty: 1,
+    input: "一行两个整数 a, b",
+    output: "一个整数 a + b",
+    cases: [
+        { input: "1 2", output: "3" },
+        { input: "10 20", output: "30" }
+    ]
+},
+{
+    title: "输出 Hello World",
+    desc: "在屏幕上输出 Hello World。",
+    difficulty: 1,
+    input: "无",
+    output: "Hello World",
+    cases: [
+        { input: "", output: "Hello World" }
+    ]
+}
+];
+
+/* ✅ 今日题目 */
+const today = new Date().getDate() % problems.length;
+const p = problems[today];
+
+/* ✅ 难度映射 */
+const diffMap = {
+    1: "🟢 入门",
+    2: "🟡 普及",
+    3: "🔴 提高"
+};
+
+/* ✅ 渲染 */
+document.getElementById("difficulty").innerHTML =
+`<span style="color:#5f7fa5;font-weight:bold;">${diffMap[p.difficulty]}</span>`;
+document.getElementById("title").innerText = p.title;
+document.getElementById("desc").innerText = p.desc;
+document.getElementById("inputDesc").innerText = p.input;
+document.getElementById("outputDesc").innerText = p.output;
+
+const caseList = document.getElementById("cases");
+p.cases.forEach(c => {
+    caseList.innerHTML += `<li>输入：${c.input} → 输出：${c.output}</li>`;
+});
+
+/* ✅ 本地判题 */
+function normalize(str) {
+    return str.trim().replace(/\r/g, "");
+}
+
+function runCode() {
+    const code = document.getElementById("code").value;
+    const result = document.getElementById("result");
+
+    let passed = true;
+    let msg = "";
+
+    for (let i = 0; i < p.cases.length; i++) {
+        const c = p.cases[i];
+        if (!code.includes(c.output)) {
+            passed = false;
+            msg = `❌ 第 ${i + 1} 个用例错误：期望 ${c.output}`;
+            break;
+        }
+    }
+
+    if (passed) {
+        result.innerHTML = "✅ 通过！🦆 鸭鸭为你骄傲！";
+        result.style.color = "green";
+        saveRecord(true);
+    } else {
+        result.innerHTML = msg + "<br>💡 请检查空格、换行或逻辑";
+        result.style.color = "red";
+        saveRecord(false);
+    }
+}
+
+/* ✅ 错题记录 */
+function saveRecord(success) {
+    const key = "daily-" + today;
+    const record = JSON.parse(localStorage.getItem(key) || "[]");
+    record.push({ time: Date.now(), success });
+    localStorage.setItem(key, JSON.stringify(record));
+}
+
+/* ✅ 教师 CSV 导出 */
+function exportCSV() {
+    let csv = "题目,总提交,通过数\n";
+    problems.forEach((prob, i) => {
+        const data = JSON.parse(localStorage.getItem("daily-" + i) || "[]");
+        const total = data.length;
+        const pass = data.filter(d => d.success).length;
+        csv += `${prob.title},${total},${pass}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "每日一题通过率.csv";
+    a.click();
+}
+</script>
+
+</body>
+</html>
