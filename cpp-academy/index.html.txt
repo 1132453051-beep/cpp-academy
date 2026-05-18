@@ -3,9 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <title>编程鸭 🦆</title>
+<style>
+body {
+    font-family: sans-serif;
+    background: #f2f4f7;
+    text-align: center;
+    padding: 60px;
+}
+</style>
 </head>
 <body>
-<h1>欢迎来到编程鸭 🦆</h1>
-<p>这是你的 C++ 信奥赛教学网站</p>
+<h1>🦆 编程鸭</h1>
+<p>欢迎来到鸭鸭的 C++ 世界！</p>
+<a href="stats.html">学习统计</a>
 </body>
 </html>
