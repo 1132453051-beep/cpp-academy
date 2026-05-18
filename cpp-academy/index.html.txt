@@ -3,67 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>编程鸭 🦆 - C++ 信奥赛教学</title>
+    <title>编程鸭 🦆 - C++ 信奥赛教学平台</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f8ff;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
             text-align: center;
         }
+
         .container {
             max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
-            color: #2c3e50;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .duck {
-            font-size: 3em;
-            margin: 20px 0;
+
+        .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 10px;
-            background-color: #3498db;
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
+            padding: 20px;
+            border-radius: 15px;
             text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background 0.3s;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .btn:hover {
-            background-color: #2980b9;
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+
         .footer {
-            margin-top: 30px;
-            color: #7f8c8d;
+            margin-top: 50px;
             font-size: 0.9em;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>欢迎来到 编程鸭 🦆</h1>
-        <div class="duck">🦆</div>
-        面向中小学生的 C++ 信奥赛教学网站
+        <h1>🦆 编程鸭</h1>
+        <p class="subtitle">C++ 信奥赛专属教学平台 | 让学习编程变得有趣
         
-        <a href="daily.html" class="btn">🎲 每日一题</a>
-        <a href="course/basic-syntax.html" class="btn">📚 课程学习</a>
-        <a href="stats.html" class="btn">📊 学习统计</a>
-        <a href="badges.html" class="btn">🏅 学习勋章</a>
+        <div class="nav-grid">
+            <a href="daily.html" class="nav-button">📅 每日一题</a>
+            <a href="course/index.html" class="nav-button">📚 课程中心</a>
+            <a href="stats.html" class="nav-button">📊 学习统计</a>
+            <a href="badges.html" class="nav-button">🏆 成就徽章</a>
+            <a href="teacher.html" class="nav-button">👨‍🏫 教师端</a>
+            <a href="calendar.html" class="nav-button">🗓️ 打卡日历</a>
+            <a href="favorites.html" class="nav-button">⭐ 我的收藏</a>
+            <a href="install.html" class="nav-button">📱 安装APP</a>
+        </div>
         
         <div class="footer">
-            让编程像鸭子一样快乐 🎉
+            © 2026 编程鸭 | 用代码改变世界
         </div>
     </div>
+
+    <script>
+        console.log('🦆 编程鸭网站已加载！');
+        // 这里可以添加更多交互功能
+    </script>
 </body>
 </html>
