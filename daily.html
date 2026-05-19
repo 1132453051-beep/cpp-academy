@@ -1,90 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>每日一题 · 编程鸭</title>
-<link rel="stylesheet" href="assets/style.css">
+<title>每日一题 · 真·编译器</title>
 <style>
-/* ===== 每日一题专属美化 ===== */
-.editor {
-    background: #1e1e1e;
-    color: #dcdcdc;
-    border-radius: 12px;
-    padding: 16px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    resize: vertical;
-    border: none;
-}
-
-.card {
-    background: var(--card-bg, #fff);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-    margin-bottom: 24px;
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-.badge.easy { background:#e8f5e9; color:#2e7d32; }
-.badge.medium { background:#fff3e0; color:#ef6c00; }
-.badge.hard { background:#ffebee; color:#c62828; }
-
-.result-box {
-    padding: 16px;
-    border-radius: 12px;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-pre {
-    background: #f6f8fa;
-    padding: 12px;
-    border-radius: 10px;
-    overflow-x: auto;
-}
+body { font-family: sans-serif; background:#f4f6f8; padding:20px; }
+textarea { width:100%; height:180px; font-family: monospace; }
+button { padding:10px 16px; margin-top:10px; }
+pre { background:#1e1e1e; color:#fff; padding:12px; border-radius:8px; }
 </style>
 </head>
 
 <body>
 
-<header class="gradient-header">
-    <h1>🎲 每日一题</h1>
-    <a href="index.html" style="color:white;">← 返回首页</a>
-</header>
+<h1>🎲 每日一题（真·C++ 编译器）</h1>
 
-<main class="container">
-
-<!-- 题目卡片 -->
-<section class="card">
-    <div id="difficulty"></div>
-    <h2 id="title"></h2>
-    <p id="desc"></p>
-
-    <div style="margin-top:16px;">
-        <p><strong>📥 输入：</strong> <span id="inputDesc"></span></p>
-        <p><strong>📤 输出：</strong> <span id="outputDesc"></span></p>
-    </div>
-
-    <h3 style="margin-top:20px;">📌 测试用例</h3>
-    <ul id="cases"></ul>
-</section>
-
-<!-- 代码编辑器 -->
-<section class="card">
-    <h3>🧠 编写代码</h3>
-    <textarea id="code" class="editor" rows="14">
-#include &lt;iostream&gt;
+<textarea id="code">
+#include <iostream>
 using namespace std;
 
 int main() {
@@ -93,106 +25,27 @@ int main() {
     cout << a + b;
     return 0;
 }
-    </textarea>
+</textarea>
 
-    <button class="btn" onclick="runCode()">🚀 提交判题</button>
+<br>
+<button onclick="compile()">🚀 运行</button>
 
-    <div id="result"></div>
-</section>
+<h3>📤 输出</h3>
+<pre id="out">等待运行...</pre>
 
-<!-- 教师工具 -->
-<section class="card">
-    <button class="btn" onclick="exportCSV()">📤 导出通过率 CSV</button>
-</section>
-
-</main>
-
+<script src="assets/compiler.js"></script>
 <script>
-/* ===== 题目数据 ===== */
-const problems = [
-{
-    title: "A + B 问题",
-    desc: "输入两个整数，输出它们的和。",
-    difficulty: 1,
-    input: "一行两个整数",
-    output: "一个整数",
-    cases: [
-        { input: "1 2", output: "3" },
-        { input: "10 20", output: "30" }
-    ]
-}
-];
-
-const today = new Date().getDate() % problems.length;
-const p = problems[today];
-
-const diffMap = {
-    1: ["🟢 入门", "easy"],
-    2: ["🟡 普及", "medium"],
-    3: ["🔴 提高", "hard"]
+let Module = {
+    print: text => document.getElementById("out").innerText += text + "\n",
+    onRuntimeInitialized() {
+        console.log("✅ C++ 编译器就绪");
+    }
 };
 
-document.getElementById("difficulty").innerHTML =
-`<span class="badge ${diffMap[p.difficulty][1]}">${diffMap[p.difficulty][0]}</span>`;
-document.getElementById("title").innerText = p.title;
-document.getElementById("desc").innerText = p.desc;
-document.getElementById("inputDesc").innerText = p.input;
-document.getElementById("outputDesc").innerText = p.output;
-
-p.cases.forEach(c => {
-    document.getElementById("cases").innerHTML +=
-    `<li>输入：${c.input} → 输出：${c.output}</li>`;
-});
-
-/* ===== 判题 ===== */
-function runCode() {
+function compile() {
     const code = document.getElementById("code").value;
-    const result = document.getElementById("result");
-    let pass = true;
-
-    for (let c of p.cases) {
-        if (!code.includes(c.output)) {
-            pass = false;
-            break;
-        }
-    }
-
-    result.className = "result-box";
-    if (pass) {
-        result.style.background = "#e8f5e9";
-        result.style.color = "#2e7d32";
-        result.innerHTML = "✅ 通过！🦆 鸭鸭为你骄傲！";
-        save(true);
-    } else {
-        result.style.background = "#ffebee";
-        result.style.color = "#c62828";
-        result.innerHTML = "❌ 未通过<br>💡 请检查空格、换行或逻辑";
-        save(false);
-    }
-}
-
-/* ===== 错题记录 ===== */
-function save(success) {
-    const key = "daily-" + today;
-    const data = JSON.parse(localStorage.getItem(key) || "[]");
-    data.push({ t: Date.now(), s: success });
-    localStorage.setItem(key, JSON.stringify(data));
-}
-
-/* ===== CSV ===== */
-function exportCSV() {
-    let csv = "题目,提交数,通过数\n";
-    problems.forEach((p, i) => {
-        const d = JSON.parse(localStorage.getItem("daily-" + i) || "[]");
-        const total = d.length;
-        const pass = d.filter(x => x.s).length;
-        csv += `${p.title},${total},${pass}\n`;
-    });
-
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([csv]));
-    a.download = "每日一题通过率.csv";
-    a.click();
+    document.getElementById("out").innerText = "";
+    Module.ccall("run_code", null, ["string"], [code]);
 }
 </script>
 
